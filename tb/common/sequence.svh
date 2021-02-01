@@ -1,5 +1,5 @@
-class my_sequence extends uvm_sequence #(my_packet_i);   
-   `uvm_object_utils(my_sequence)
+class sequence extends uvm_sequence #(packet_i);   
+   `uvm_object_utils(sequence)
 
    rand int n; // number of tx
    
@@ -9,8 +9,8 @@ class my_sequence extends uvm_sequence #(my_packet_i);
 
    task body;
       
-      my_packet_i tx;
-      tx = my_packet_i::type_id::create("tx");
+      packet_i tx;
+      tx = packet_i::type_id::create("tx");
       
       repeat(n) begin	 
 	 start_item(tx);	 
@@ -27,4 +27,4 @@ class my_sequence extends uvm_sequence #(my_packet_i);
  
     endtask // body
    
-endclass // my_sequence
+endclass // sequence

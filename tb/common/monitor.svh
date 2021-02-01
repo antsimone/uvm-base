@@ -1,12 +1,12 @@
-class my_monitor extends uvm_monitor;   
-   `uvm_component_utils(my_monitor);
+class monitor extends uvm_monitor;   
+   `uvm_component_utils(monitor);
 
    virtual dut_if#(DATA_WIDTH_I, DATA_WIDTH_O) dut_vi_i;
-   my_packet_i tx;
+   packet_i tx;
    
-   uvm_analysis_port #(my_packet_i) aport;
+   uvm_analysis_port #(packet_i) aport;
    
-   function new(string name = "my_monitor", uvm_component parent = null);
+   function new(string name = "monitor", uvm_component parent = null);
       super.new(name, parent);
    endfunction // new
   
@@ -25,7 +25,7 @@ class my_monitor extends uvm_monitor;
 	 @(posedge dut_vi_i.clk);
 	 if ( (dut_vi_i.valid) && (dut_vi_i.ready) ) begin	    
 	    
-            tx   = my_packet_i::type_id::create("tx");            
+            tx   = packet_i::type_id::create("tx");            
 	    tx.a = dut_vi_i.a;
 	    tx.b = dut_vi_i.b;
 	    `uvm_info("Monitor", $sformatf("Put transaction A=%0h\tB=%0h\tRDY=%b\tVALID=%b", dut_vi_i.a, dut_vi_i.b, dut_vi_i.ready, dut_vi_i.valid), UVM_LOW)	    
@@ -37,4 +37,4 @@ class my_monitor extends uvm_monitor;
    
    
 
-endclass // my_monitor
+endclass // monitor

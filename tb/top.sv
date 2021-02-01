@@ -1,6 +1,6 @@
 module top ();
    import uvm_pkg::*;   
-   import my_pkg::*;
+   import pkg::*;
    
    logic       clk;
    logic       rst;

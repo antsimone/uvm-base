@@ -1,19 +1,19 @@
-class my_comparator extends uvm_component;
-   `uvm_component_utils(my_comparator)
+class comparator extends uvm_component;
+   `uvm_component_utils(comparator)
 
-   uvm_analysis_export #(my_packet_o) before_export;
-   uvm_analysis_export #(my_packet_o) after_export;
+   uvm_analysis_export #(packet_o) before_export;
+   uvm_analysis_export #(packet_o) after_export;
    
-   uvm_tlm_analysis_fifo #(my_packet_o) before_fifo;
-   uvm_tlm_analysis_fifo #(my_packet_o) after_fifo;
+   uvm_tlm_analysis_fifo #(packet_o) before_fifo;
+   uvm_tlm_analysis_fifo #(packet_o) after_fifo;
    
-   int my_matches;
-   int my_mismatches;
+   int matches;
+   int mismatches;
    
-   function new(string name = "my_comparator", uvm_component parent = null);
+   function new(string name = "comparator", uvm_component parent = null);
       super.new(name, parent);     
-      my_matches     = 0;
-      my_mismatches  = 0;      
+      matches     = 0;
+      mismatches  = 0;      
    endfunction // new
 
    function void build_phase(uvm_phase phase);
@@ -29,8 +29,8 @@ class my_comparator extends uvm_component;
    endfunction // connect_phase
 
    task run_phase(uvm_phase phase);
-      my_packet_o before_tx;
-      my_packet_o after_tx;
+      packet_o before_tx;
+      packet_o after_tx;
       
       forever begin
 	 before_fifo.get(before_tx);	    
@@ -41,10 +41,10 @@ class my_comparator extends uvm_component;
 	 `uvm_info("FIFO_after", $sformatf("RES=%0h", after_tx.res), UVM_MEDIUM);	 
 	 
 	 if( !after_tx.compare(before_tx) ) begin	    
-	    my_mismatches++;
+	    mismatches++;
 	 end
 	 else begin
-	    my_matches++;
+	    matches++;
 	 end
 	 
 	 phase.drop_objection(this);
@@ -55,8 +55,8 @@ class my_comparator extends uvm_component;
    
    function void report_phase(uvm_phase phase);      
       `uvm_info("", $sformatf("\n"), UVM_MEDIUM)
-      `uvm_info("CMP", $sformatf("\n\nMatches:\t%0d\n\n", my_matches), UVM_MEDIUM)   
-      `uvm_info("CMP", $sformatf("\n\nMismatches:\t%0d\n\n", my_mismatches), UVM_MEDIUM)
+      `uvm_info("CMP", $sformatf("\n\nMatches:\t%0d\n\n", matches), UVM_MEDIUM)   
+      `uvm_info("CMP", $sformatf("\n\nMismatches:\t%0d\n\n", mismatches), UVM_MEDIUM)
    endfunction // report_phase
 
-endclass // my_comparator
+endclass // comparator

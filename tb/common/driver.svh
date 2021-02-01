@@ -1,10 +1,10 @@
-class my_driver extends uvm_driver #(my_packet_i);   
-   `uvm_component_utils(my_driver);
+class driver extends uvm_driver #(packet_i);   
+   `uvm_component_utils(driver);
    
    virtual dut_if#(DATA_WIDTH_I, DATA_WIDTH_O) dut_vi_i;
-   my_packet_i tx; // PACKET_I
+   packet_i tx; // PACKET_I
    
-   function new(string name = "my_driver", uvm_component parent = null);
+   function new(string name = "driver", uvm_component parent = null);
       super.new(name, parent);
    endfunction // new
 
@@ -40,7 +40,7 @@ class my_driver extends uvm_driver #(my_packet_i);
    endtask // run_phase
    
 
-endclass // my_driver
+endclass // driver
 
 	
       
